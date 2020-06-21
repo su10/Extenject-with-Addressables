@@ -3,6 +3,9 @@
 using System;
 using ModestTree;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
 namespace Zenject
@@ -246,6 +249,44 @@ namespace Zenject
                 "Unable to load scene '{0}'", sceneIndex);
 
             return SceneManager.LoadSceneAsync(sceneIndex, loadMode);
+        }
+
+        public AsyncOperationHandle<SceneInstance> LoadSceneAsync(AssetReferenceSceneAsset sceneReference)
+        {
+            return LoadSceneAsync(sceneReference, LoadSceneMode.Single);
+        }
+
+        public AsyncOperationHandle<SceneInstance> LoadSceneAsync(AssetReferenceSceneAsset sceneReference, LoadSceneMode loadMode)
+        {
+            return LoadSceneAsync(sceneReference, loadMode, null);
+        }
+
+        public AsyncOperationHandle<SceneInstance> LoadSceneAsync(
+            AssetReferenceSceneAsset sceneReference, LoadSceneMode loadMode, Action<DiContainer> extraBindings)
+        {
+            return LoadSceneAsync(sceneReference, loadMode, extraBindings, LoadSceneRelationship.None);
+        }
+
+        public AsyncOperationHandle<SceneInstance> LoadSceneAsync(
+            AssetReferenceSceneAsset sceneReference,
+            LoadSceneMode loadMode,
+            Action<DiContainer> extraBindings,
+            LoadSceneRelationship containerMode)
+        {
+            return LoadSceneAsync(
+                sceneReference, loadMode, extraBindings, containerMode, null);
+        }
+
+        public AsyncOperationHandle<SceneInstance> LoadSceneAsync(
+            AssetReferenceSceneAsset sceneReference,
+            LoadSceneMode loadMode,
+            Action<DiContainer> extraBindings,
+            LoadSceneRelationship containerMode,
+            Action<DiContainer> extraBindingsLate)
+        {
+            PrepareForLoadScene(loadMode, extraBindings, extraBindingsLate, containerMode);
+
+            return Addressables.LoadSceneAsync(sceneReference, loadMode);
         }
     }
 }
