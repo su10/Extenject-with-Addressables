@@ -7,5 +7,16 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Initialize.unity
-    guid: 06653a40c72114a96bd8b1ff8ed314da
-  m_configObjects: {}
+    guid: e42456f9206cc467f889438107dfff15
+  - enabled: 1
+    path: Assets/Scenes/Parent.unity
+    guid: 7653cdf1a4c1345228fa4edd40468425
+  - enabled: 0
+    path: Assets/Scenes/Child.unity
+    guid: 04639220a7b3a4523a76bc4338cd6fc1
+  - enabled: 0
+    path: Assets/Scenes/Child(Contract).unity
+    guid: 94299657598014f23861e51df78a64c7
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 900feef3db90b4420a3b47cc7061e37e,
+      type: 2}
